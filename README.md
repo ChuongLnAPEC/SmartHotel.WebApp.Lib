@@ -1,0 +1,1 @@
+# SmartHotel.WebApp.Lib
