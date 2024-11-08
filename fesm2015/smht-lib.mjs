@@ -7,7 +7,7 @@ import * as i1 from '@angular/common/http';
 class CommonSmhtService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.api = 'https://api-gateway-test.apecgroup.net/shmv2-fo';
+        this.api = 'https://api-gateway-test.apecgroup.net/shmv2/fo';
         this.systemDateSubject = new BehaviorSubject(null);
         this.systemDate$ = this.systemDateSubject.asObservable().pipe(switchMap((date) => {
             if (date === null) {
