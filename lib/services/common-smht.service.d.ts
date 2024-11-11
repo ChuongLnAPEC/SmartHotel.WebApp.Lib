@@ -12,7 +12,7 @@ export declare class CommonSmhtService {
     constructor(httpClient: HttpClient);
     getDate(): Observable<any>;
     updateSystemDate(): void;
-    modifyDateByUTC(date: Date, isGetMethod: boolean): Date;
+    modifyDateByUTC(date: any, isGetMethod: boolean): Date;
     static ɵfac: i0.ɵɵFactoryDeclaration<CommonSmhtService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CommonSmhtService>;
 }

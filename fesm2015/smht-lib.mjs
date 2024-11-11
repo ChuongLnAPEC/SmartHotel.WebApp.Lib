@@ -31,8 +31,9 @@ class CommonSmhtService {
     }
     modifyDateByUTC(date, isGetMethod) {
         const localUTC = (new Date().getTimezoneOffset() / 60);
-        date.setHours(date.getHours() + (!isGetMethod ? -localUTC : localUTC));
-        return date;
+        const data = new Date(date);
+        data.setHours(data.getHours() + (!isGetMethod ? -localUTC : localUTC));
+        return data;
     }
 }
 CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
