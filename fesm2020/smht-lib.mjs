@@ -11,10 +11,10 @@ class CommonSmhtService {
         this.systemDateSubject = new BehaviorSubject(null);
         this.systemDate$ = this.systemDateSubject.asObservable().pipe(switchMap((date) => {
             if (date === null) {
-                return this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult)));
+                return this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(this.modifyDateByUTC(fetchedDate.dataResult, true))));
             }
             else {
-                return of(this.modifyDateByUTC(date, false));
+                return of(this.modifyDateByUTC(date, true));
             }
         }));
         this.showLoadingSubject = new BehaviorSubject(false);
