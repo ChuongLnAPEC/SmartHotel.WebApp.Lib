@@ -14,23 +14,25 @@ class CommonSmhtService {
                 return this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult)));
             }
             else {
-                return of(date);
+                return of(this.modifyDateByUTC(date, false));
             }
         }));
         this.showLoadingSubject = new BehaviorSubject(false);
         this.showLoadingObservable = this.showLoadingSubject.asObservable();
-        this.getDate();
     }
     showLoading(isLoading) {
         this.showLoadingSubject.next(isLoading);
     }
     getDate() {
-        // return of(new Date());
         return this.httpClient.get(this.api + '/api/sys/getWorkingDate');
-        // return this.sysServiceProxy.getWorkingDate()
     }
     updateSystemDate() {
         this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult))).subscribe();
+    }
+    modifyDateByUTC(date, isGetMethod) {
+        const localUTC = (new Date().getTimezoneOffset() / 60);
+        date.setHours(date.getHours() + (!isGetMethod ? -localUTC : localUTC));
+        return date;
     }
 }
 CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
