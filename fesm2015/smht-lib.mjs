@@ -19,6 +19,8 @@ class CommonSmhtService {
         }));
         this.showLoadingSubject = new BehaviorSubject(false);
         this.showLoadingObservable = this.showLoadingSubject.asObservable();
+        this.messageSocketSubject = new BehaviorSubject(null);
+        this.messageSocket$ = this.messageSocketSubject.asObservable();
     }
     showLoading(isLoading) {
         this.showLoadingSubject.next(isLoading);
@@ -34,6 +36,9 @@ class CommonSmhtService {
         const data = new Date(date);
         data.setHours(data.getHours() + (!isGetMethod ? -localUTC : localUTC));
         return data;
+    }
+    getMessageSocket(data) {
+        this.messageSocketSubject.next(data);
     }
 }
 CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });

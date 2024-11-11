@@ -8,11 +8,14 @@ export declare class CommonSmhtService {
     systemDate$: Observable<Date>;
     private showLoadingSubject;
     showLoadingObservable: Observable<boolean>;
-    showLoading(isLoading: boolean): void;
+    private messageSocketSubject;
+    private messageSocket$;
     constructor(httpClient: HttpClient);
+    showLoading(isLoading: boolean): void;
     getDate(): Observable<any>;
     updateSystemDate(): void;
     modifyDateByUTC(date: any, isGetMethod: boolean): Date;
+    getMessageSocket(data: any): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<CommonSmhtService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CommonSmhtService>;
 }
