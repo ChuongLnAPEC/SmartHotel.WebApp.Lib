@@ -9,7 +9,7 @@ export declare class CommonSmhtService {
     private showLoadingSubject;
     showLoadingObservable: Observable<boolean>;
     private messageSocketSubject;
-    private messageSocket$;
+    messageSocket$: Observable<any>;
     constructor(httpClient: HttpClient);
     showLoading(isLoading: boolean): void;
     getDate(): Observable<any>;
