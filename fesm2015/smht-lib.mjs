@@ -21,6 +21,11 @@ class CommonSmhtService {
         this.showLoadingObservable = this.showLoadingSubject.asObservable();
         this.messageSocketSubject = new BehaviorSubject(null);
         this.messageSocket$ = this.messageSocketSubject.asObservable();
+        this.languageSubject = new BehaviorSubject(localStorage.getItem('lang') || 'en');
+        this.language$ = this.languageSubject.asObservable();
+    }
+    setLanguage(lang) {
+        this.languageSubject.next(lang);
     }
     showLoading(isLoading) {
         this.showLoadingSubject.next(isLoading);

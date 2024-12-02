@@ -10,7 +10,10 @@ export declare class CommonSmhtService {
     showLoadingObservable: Observable<boolean>;
     private messageSocketSubject;
     messageSocket$: Observable<any>;
+    private languageSubject;
+    language$: Observable<string>;
     constructor(httpClient: HttpClient);
+    setLanguage(lang: string): void;
     showLoading(isLoading: boolean): void;
     getDate(): Observable<any>;
     updateSystemDate(): void;
