@@ -7,7 +7,7 @@ import * as i1 from '@angular/common/http';
 class CommonSmhtService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.api = 'https://api-gateway-test.apecgroup.net/shmv2/fo';
+        this.api = 'https://lotus-uat.fourier.group/fo-api';
         this.systemDateSubject = new BehaviorSubject(null);
         this.systemDate$ = this.systemDateSubject.asObservable().pipe(switchMap((date) => {
             if (date === null) {
@@ -21,7 +21,7 @@ class CommonSmhtService {
         this.showLoadingObservable = this.showLoadingSubject.asObservable();
         this.messageSocketSubject = new BehaviorSubject(null);
         this.messageSocket$ = this.messageSocketSubject.asObservable();
-        this.languageSubject = new BehaviorSubject(localStorage.getItem('lang') || 'en');
+        this.languageSubject = new BehaviorSubject(localStorage.getItem('language') || 'en');
         this.language$ = this.languageSubject.asObservable();
     }
     setLanguage(lang) {
