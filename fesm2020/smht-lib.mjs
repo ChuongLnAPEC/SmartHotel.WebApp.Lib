@@ -1,13 +1,37 @@
 import * as i0 from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import * as i1 from '@angular/common/http';
 
+class CommonSmhtConfigService {
+    constructor() {
+        this.config = {};
+    }
+    setConfig(config) {
+        this.config = config;
+    }
+    getConfig(key) {
+        if (!this.config[key]) {
+            throw new Error(`Configuration key "${key}" is not set.`);
+        }
+        return this.config[key];
+    }
+}
+CommonSmhtConfigService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+CommonSmhtConfigService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, providedIn: 'root' });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root',
+                }]
+        }] });
+
 class CommonSmhtService {
-    constructor(httpClient) {
+    constructor(httpClient, configService, config) {
         this.httpClient = httpClient;
-        this.api = 'https://api-gateway-test.apecgroup.net/shmv2/fo';
+        this.configService = configService;
+        this.config = config;
         this.systemDateSubject = new BehaviorSubject(null);
         this.systemDate$ = this.systemDateSubject.asObservable().pipe(switchMap((date) => {
             if (date === null) {
@@ -21,8 +45,12 @@ class CommonSmhtService {
         this.showLoadingObservable = this.showLoadingSubject.asObservable();
         this.messageSocketSubject = new BehaviorSubject(null);
         this.messageSocket$ = this.messageSocketSubject.asObservable();
-        this.languageSubject = new BehaviorSubject(localStorage.getItem('lang') || 'en');
+        this.languageSubject = new BehaviorSubject(localStorage.getItem('language') || 'en');
         this.language$ = this.languageSubject.asObservable();
+        this.configService.setConfig(this.config);
+    }
+    getApiUrl() {
+        return this.configService.getConfig('apiUrl');
     }
     setLanguage(lang) {
         this.languageSubject.next(lang);
@@ -31,7 +59,7 @@ class CommonSmhtService {
         this.showLoadingSubject.next(isLoading);
     }
     getDate() {
-        return this.httpClient.get(this.api + '/api/sys/getWorkingDate');
+        return this.httpClient.get(this.getApiUrl() + '/api/sys/getWorkingDate');
     }
     updateSystemDate() {
         this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult))).subscribe();
@@ -46,14 +74,17 @@ class CommonSmhtService {
         this.messageSocketSubject.next(data);
     }
 }
-CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
+CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }, { token: CommonSmhtConfigService }, { token: 'YourLibraryConfig' }], target: i0.ɵɵFactoryTarget.Injectable });
 CommonSmhtService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, providedIn: 'root' });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'
                 }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }]; } });
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: CommonSmhtConfigService }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['YourLibraryConfig']
+                }] }]; } });
 
 /**
  * Generated bundle index. Do not edit.
