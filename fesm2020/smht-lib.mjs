@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, NgModule } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import * as i1 from '@angular/common/http';
@@ -86,9 +86,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
                     args: ['CommonSmhtConfigService']
                 }] }]; } });
 
+class SmhtLibModule {
+    static forRoot(config) {
+        return {
+            ngModule: SmhtLibModule,
+            providers: [
+                {
+                    provide: 'CommonSmhtConfig',
+                    useValue: config,
+                },
+                CommonSmhtConfigService,
+            ],
+        };
+    }
+}
+SmhtLibModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: SmhtLibModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+SmhtLibModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "14.3.0", ngImport: i0, type: SmhtLibModule });
+SmhtLibModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: SmhtLibModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: SmhtLibModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    declarations: [],
+                    imports: [],
+                    exports: []
+                }]
+        }] });
+
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { CommonSmhtService };
+export { CommonSmhtService, SmhtLibModule };
 //# sourceMappingURL=smht-lib.mjs.map
