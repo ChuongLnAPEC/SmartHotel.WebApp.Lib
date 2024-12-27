@@ -74,7 +74,7 @@ class CommonSmhtService {
         this.messageSocketSubject.next(data);
     }
 }
-CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }, { token: CommonSmhtConfigService }, { token: 'YourLibraryConfig' }], target: i0.ɵɵFactoryTarget.Injectable });
+CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }, { token: CommonSmhtConfigService }, { token: 'CommonSmhtConfigService' }], target: i0.ɵɵFactoryTarget.Injectable });
 CommonSmhtService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, providedIn: 'root' });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, decorators: [{
             type: Injectable,
@@ -84,7 +84,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
         }], ctorParameters: function () {
         return [{ type: i1.HttpClient }, { type: CommonSmhtConfigService }, { type: undefined, decorators: [{
                         type: Inject,
-                        args: ['YourLibraryConfig']
+                        args: ['CommonSmhtConfigService']
                     }] }];
     } });
 
