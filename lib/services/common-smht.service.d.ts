@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CommonSmhtConfigService } from './common-smht-config.service';
 import * as i0 from "@angular/core";
 export declare class CommonSmhtService {
     private httpClient;
-    private configService;
-    private config;
+    private env;
     private systemDateSubject;
     systemDate$: Observable<Date>;
     private showLoadingSubject;
@@ -14,7 +12,7 @@ export declare class CommonSmhtService {
     messageSocket$: Observable<any>;
     private languageSubject;
     language$: Observable<string>;
-    constructor(httpClient: HttpClient, configService: CommonSmhtConfigService, config: any);
+    constructor(httpClient: HttpClient, env: any);
     getApiUrl(): string;
     setLanguage(lang: string): void;
     showLoading(isLoading: boolean): void;

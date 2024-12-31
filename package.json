@@ -1,6 +1,20 @@
 {
-  "name": "smht-lib",
+  "name": "smht-lib-local",
   "version": "1.0.2",
+  "exports": {
+    "./*": "./dist/*",
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/smht-lib-local.mjs",
+      "es2020": "./fesm2020/smht-lib-local.mjs",
+      "es2015": "./fesm2015/smht-lib-local.mjs",
+      "node": "./fesm2015/smht-lib-local.mjs",
+      "default": "./fesm2020/smht-lib-local.mjs"
+    }
+  },
   "peerDependencies": {
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0"
@@ -8,24 +22,11 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "module": "fesm2015/smht-lib.mjs",
-  "es2020": "fesm2020/smht-lib.mjs",
-  "esm2020": "esm2020/smht-lib.mjs",
-  "fesm2020": "fesm2020/smht-lib.mjs",
-  "fesm2015": "fesm2015/smht-lib.mjs",
+  "module": "fesm2015/smht-lib-local.mjs",
+  "es2020": "fesm2020/smht-lib-local.mjs",
+  "esm2020": "esm2020/smht-lib-local.mjs",
+  "fesm2020": "fesm2020/smht-lib-local.mjs",
+  "fesm2015": "fesm2015/smht-lib-local.mjs",
   "typings": "index.d.ts",
-  "exports": {
-    "./package.json": {
-      "default": "./package.json"
-    },
-    ".": {
-      "types": "./index.d.ts",
-      "esm2020": "./esm2020/smht-lib.mjs",
-      "es2020": "./fesm2020/smht-lib.mjs",
-      "es2015": "./fesm2015/smht-lib.mjs",
-      "node": "./fesm2015/smht-lib.mjs",
-      "default": "./fesm2020/smht-lib.mjs"
-    }
-  },
   "sideEffects": false
 }
