@@ -35,11 +35,11 @@ class CommonSmhtService {
         this.showLoadingSubject.next(isLoading);
     }
     getDate() {
-        console.log(this.getApiUrl());
+        // console.log(this.getApiUrl());
         return this.httpClient.get(this.getApiUrl() + '/api/sys/getWorkingDate');
     }
     updateSystemDate() {
-        this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult))).subscribe();
+        this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(this.modifyDateByUTC(new Date(fetchedDate.dataResult), true)))).subscribe();
     }
     modifyDateByUTC(date, isGetMethod) {
         const localUTC = (new Date().getTimezoneOffset() / 60);
