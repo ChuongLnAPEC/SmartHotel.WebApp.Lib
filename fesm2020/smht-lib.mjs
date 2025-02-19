@@ -4,34 +4,10 @@ import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import * as i1 from '@angular/common/http';
 
-class CommonSmhtConfigService {
-    constructor() {
-        this.config = {};
-    }
-    setConfig(config) {
-        this.config = config;
-    }
-    getConfig(key) {
-        if (!this.config[key]) {
-            throw new Error(`Configuration key "${key}" is not set.`);
-        }
-        return this.config[key];
-    }
-}
-CommonSmhtConfigService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-CommonSmhtConfigService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, providedIn: 'root' });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtConfigService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root',
-                }]
-        }] });
-
 class CommonSmhtService {
-    constructor(httpClient, configService, config) {
+    constructor(httpClient, env) {
         this.httpClient = httpClient;
-        this.configService = configService;
-        this.config = config;
+        this.env = env;
         this.systemDateSubject = new BehaviorSubject(null);
         this.systemDate$ = this.systemDateSubject.asObservable().pipe(switchMap((date) => {
             if (date === null) {
@@ -47,10 +23,9 @@ class CommonSmhtService {
         this.messageSocket$ = this.messageSocketSubject.asObservable();
         this.languageSubject = new BehaviorSubject(localStorage.getItem('language') || 'en');
         this.language$ = this.languageSubject.asObservable();
-        this.configService.setConfig(this.config);
     }
     getApiUrl() {
-        return this.configService.getConfig('apiUrl');
+        return this.env?.apis.default?.url;
     }
     setLanguage(lang) {
         this.languageSubject.next(lang);
@@ -62,7 +37,7 @@ class CommonSmhtService {
         return this.httpClient.get(this.getApiUrl() + '/api/sys/getWorkingDate');
     }
     updateSystemDate() {
-        this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(fetchedDate.dataResult))).subscribe();
+        this.getDate().pipe(tap(fetchedDate => this.systemDateSubject.next(this.modifyDateByUTC(new Date(fetchedDate.dataResult), true)))).subscribe();
     }
     modifyDateByUTC(date, isGetMethod) {
         const localUTC = (new Date().getTimezoneOffset() / 60);
@@ -74,28 +49,28 @@ class CommonSmhtService {
         this.messageSocketSubject.next(data);
     }
 }
-CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }, { token: CommonSmhtConfigService }, { token: 'CommonSmhtConfigService' }], target: i0.ɵɵFactoryTarget.Injectable });
+CommonSmhtService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, deps: [{ token: i1.HttpClient }, { token: 'env' }], target: i0.ɵɵFactoryTarget.Injectable });
 CommonSmhtService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, providedIn: 'root' });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CommonSmhtService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'
                 }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: CommonSmhtConfigService }, { type: undefined, decorators: [{
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
                     type: Inject,
-                    args: ['CommonSmhtConfigService']
+                    args: ['env']
                 }] }]; } });
 
 class SmhtLibModule {
-    static forRoot(config) {
+    static forRoot(environment) {
         return {
             ngModule: SmhtLibModule,
             providers: [
                 {
-                    provide: 'CommonSmhtConfig',
-                    useValue: config,
+                    provide: 'env',
+                    useValue: environment,
                 },
-                CommonSmhtConfigService,
+                CommonSmhtService
             ],
         };
     }
@@ -116,5 +91,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
  * Generated bundle index. Do not edit.
  */
 
-export { CommonSmhtConfigService, CommonSmhtService, SmhtLibModule };
+export { CommonSmhtService, SmhtLibModule };
 //# sourceMappingURL=smht-lib.mjs.map

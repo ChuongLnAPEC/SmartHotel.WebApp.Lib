@@ -1,6 +1,6 @@
 {
-  "name": "smht-lib-local",
-  "version": "1.0.2",
+  "name": "smht-lib",
+  "version": "1.0.3",
   "exports": {
     "./*": "./dist/*",
     "./package.json": {
@@ -8,11 +8,11 @@
     },
     ".": {
       "types": "./index.d.ts",
-      "esm2020": "./esm2020/smht-lib-local.mjs",
-      "es2020": "./fesm2020/smht-lib-local.mjs",
-      "es2015": "./fesm2015/smht-lib-local.mjs",
-      "node": "./fesm2015/smht-lib-local.mjs",
-      "default": "./fesm2020/smht-lib-local.mjs"
+      "esm2020": "./esm2020/smht-lib.mjs",
+      "es2020": "./fesm2020/smht-lib.mjs",
+      "es2015": "./fesm2015/smht-lib.mjs",
+      "node": "./fesm2015/smht-lib.mjs",
+      "default": "./fesm2020/smht-lib.mjs"
     }
   },
   "peerDependencies": {
@@ -22,11 +22,11 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "module": "fesm2015/smht-lib-local.mjs",
-  "es2020": "fesm2020/smht-lib-local.mjs",
-  "esm2020": "esm2020/smht-lib-local.mjs",
-  "fesm2020": "fesm2020/smht-lib-local.mjs",
-  "fesm2015": "fesm2015/smht-lib-local.mjs",
+  "module": "fesm2015/smht-lib.mjs",
+  "es2020": "fesm2020/smht-lib.mjs",
+  "esm2020": "esm2020/smht-lib.mjs",
+  "fesm2020": "fesm2020/smht-lib.mjs",
+  "fesm2015": "fesm2015/smht-lib.mjs",
   "typings": "index.d.ts",
   "sideEffects": false
 }
